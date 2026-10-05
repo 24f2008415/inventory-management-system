@@ -6,6 +6,8 @@ import os
 
 app = FastAPI()
 
+EXPOSE_HEADERS = "*, Access-Control-Allow-Origin, access-control-allow-origin"
+
 @app.middleware("http")
 async def enforce_wildcard_cors(request: Request, call_next):
     if request.method == "OPTIONS":
@@ -15,6 +17,7 @@ async def enforce_wildcard_cors(request: Request, call_next):
     response.headers["Access-Control-Allow-Origin"] = "*"
     response.headers["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS, PUT, DELETE"
     response.headers["Access-Control-Allow-Headers"] = "*"
+    response.headers["Access-Control-Expose-Headers"] = EXPOSE_HEADERS
     return response
 
 # Load telemetry data
@@ -43,21 +46,25 @@ def p95_calc(arr):
     return s[n]
 
 @app.options("/{full_path:path}")
-async def options_handler(full_path: str):
+async def options_handler(full_path: str = ""):
     return Response(
         status_code=200,
         headers={
             "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
-            "Access-Control-Allow-Headers": "*"
+            "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT, DELETE",
+            "Access-Control-Allow-Headers": "*",
+            "Access-Control-Expose-Headers": EXPOSE_HEADERS
         }
     )
 
 @app.post("/")
 @app.post("/api")
 @app.post("/api/index")
+@app.post("/api/latency")
+@app.post("/{full_path:path}")
 async def calculate_metrics(req: MetricsRequest, response: Response):
     response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Expose-Headers"] = EXPOSE_HEADERS
     results = []
     for reg in req.regions:
         recs = [r for r in telemetry if r.get("region") == reg]
@@ -79,5 +86,6 @@ async def calculate_metrics(req: MetricsRequest, response: Response):
     return {"regions": results}
 
 @app.get("/")
-async def root():
+@app.get("/{full_path:path}")
+async def root(full_path: str = ""):
     return {"message": "eShopCo Latency Diagnostics API is running"}

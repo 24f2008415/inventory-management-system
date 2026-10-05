@@ -5,7 +5,8 @@
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "*" },
         { "key": "Access-Control-Allow-Methods", "value": "POST, GET, OPTIONS, PUT, DELETE" },
-        { "key": "Access-Control-Allow-Headers", "value": "*" }
+        { "key": "Access-Control-Allow-Headers", "value": "*" },
+        { "key": "Access-Control-Expose-Headers", "value": "*, Access-Control-Allow-Origin, access-control-allow-origin" }
       ]
     }
   ],
