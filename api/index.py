@@ -1,8 +1,12 @@
+import sys
+import re
+import os
+import json
+import traceback
+from io import StringIO
+from typing import List
 from fastapi import FastAPI, Response, Request
 from pydantic import BaseModel
-from typing import List
-import json
-import os
 
 app = FastAPI()
 
@@ -20,7 +24,7 @@ async def enforce_wildcard_cors(request: Request, call_next):
     response.headers["Access-Control-Expose-Headers"] = EXPOSE_HEADERS
     return response
 
-# Load telemetry data
+# ----------------- Question: Vercel Latency Analytics -----------------
 BASE_DIR = os.path.dirname(__file__)
 DATA_PATH = os.path.join(BASE_DIR, "telemetry.json")
 if not os.path.exists(DATA_PATH):
@@ -61,7 +65,7 @@ async def options_handler(full_path: str = ""):
 @app.post("/api")
 @app.post("/api/index")
 @app.post("/api/latency")
-@app.post("/{full_path:path}")
+@app.post("/latency")
 async def calculate_metrics(req: MetricsRequest, response: Response):
     response.headers["Access-Control-Allow-Origin"] = "*"
     response.headers["Access-Control-Expose-Headers"] = EXPOSE_HEADERS
@@ -85,7 +89,46 @@ async def calculate_metrics(req: MetricsRequest, response: Response):
         })
     return {"regions": results}
 
+# ----------------- Question: Code Interpreter with AI Error Analysis -----------------
+class CodeInterpreterRequest(BaseModel):
+    code: str
+
+class CodeInterpreterResponse(BaseModel):
+    error: List[int]
+    result: str
+
+def execute_python_code(code: str) -> dict:
+    old_stdout = sys.stdout
+    sys.stdout = StringIO()
+    try:
+        exec(code, {})
+        output = sys.stdout.getvalue()
+        return {"success": True, "output": output}
+    except Exception:
+        output = traceback.format_exc()
+        return {"success": False, "output": output}
+    finally:
+        sys.stdout = old_stdout
+
+def extract_lines_from_traceback(tb: str) -> List[int]:
+    matches = re.findall(r'File "<string>", line (\d+)', tb)
+    if matches:
+        return [int(matches[-1])]
+    return []
+
+@app.post("/code-interpreter", response_model=CodeInterpreterResponse)
+@app.post("/code-interpreter/", response_model=CodeInterpreterResponse)
+async def code_interpreter_endpoint(req: CodeInterpreterRequest, response: Response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Expose-Headers"] = EXPOSE_HEADERS
+    res = execute_python_code(req.code)
+    if res["success"]:
+        return CodeInterpreterResponse(error=[], result=res["output"])
+    else:
+        err_lines = extract_lines_from_traceback(res["output"])
+        return CodeInterpreterResponse(error=err_lines, result=res["output"])
+
 @app.get("/")
 @app.get("/{full_path:path}")
 async def root(full_path: str = ""):
-    return {"message": "eShopCo Latency Diagnostics API is running"}
+    return {"message": "Server is running"}
