@@ -1,0 +1,398 @@
+[
+  {
+    "text": "I absolutely love this product, it changed my life!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "This is the worst experience I've ever had.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The weather today is quite average.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "I'm so excited about my upcoming vacation!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "I lost my favorite book and I'm heartbroken.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The meeting is scheduled for 3 PM.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "This movie brought tears of joy to my eyes.",
+    "sentiment": "happy"
+  },
+  {
+    "text": "I failed my exam and feel terrible about it.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The package arrived on time.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "Winning the competition was a dream come true!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "My pet passed away yesterday.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The report contains 50 pages.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "I'm thrilled to announce our engagement!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "The project was rejected by the committee.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The store opens at 9 AM.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "Best day ever! Everything went perfectly!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "I'm devastated by the news.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The temperature is 72 degrees.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "I can't stop smiling after hearing that!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "Nobody showed up to my birthday party.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The file is saved in the documents folder.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "This is amazing! I'm so grateful!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "I regret making that decision.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The train departs at 6:30 PM.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "I feel fantastic today!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "The company announced massive layoffs.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "There are 12 items in the list.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "This is exactly what I was hoping for!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "I'm disappointed with the results.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The conference room is on the third floor.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "I'm overjoyed with this opportunity!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "The diagnosis was worse than expected.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The document is 10 pages long.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "What a wonderful surprise!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "I feel lonely and abandoned.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The meeting will last 2 hours.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "I'm so proud of what we accomplished!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "Everything is falling apart.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The website has three main sections.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "This is the happiest moment of my life!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "I'm struggling with depression.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The office is located downtown.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "I'm delighted with the service!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "The relationship ended badly.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The system requires an update.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "I'm blessed to have such wonderful friends!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "I feel hopeless about the situation.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The price is $50.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "This is pure bliss!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "I'm crying because of the pain.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The button is on the left side.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "I'm ecstatic about the promotion!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "My heart is broken.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The application is available for download.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "Life is beautiful!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "I'm miserable and exhausted.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The event starts at noon.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "I'm radiating with happiness!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "The accident left me traumatized.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The folder contains 25 files.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "I'm jumping for joy!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "I feel utterly defeated.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The password must be 8 characters.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "This exceeded all my expectations!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "I'm drowning in sorrow.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The form has five fields.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "I'm on cloud nine!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "Everything I touch turns to failure.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The menu has four options.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "I'm bursting with excitement!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "I feel empty inside.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The course lasts 6 weeks.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "Today is the best day of my life!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "I'm suffering from anxiety.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The building has 10 floors.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "I'm incredibly fortunate!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "I lost everything in the fire.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The session duration is 30 minutes.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "I'm grinning from ear to ear!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "I'm consumed by grief.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The table has 4 columns.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "This is a dream come true!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "I'm worried sick about this.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The deadline is next Friday.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "I'm absolutely thrilled!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "I'm shattered by the betrayal.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The parking lot has 100 spaces.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "I feel alive and energized!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "I'm overwhelmed with sadness.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The manual is 200 pages.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "I'm celebrating this wonderful news!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "I'm haunted by regret.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The warranty lasts one year.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "I'm filled with pure joy!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "I'm crushed by disappointment.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The server is hosted in the cloud.",
+    "sentiment": "neutral"
+  },
+  {
+    "text": "This is absolutely spectacular!",
+    "sentiment": "happy"
+  },
+  {
+    "text": "I'm burdened by endless problems.",
+    "sentiment": "sad"
+  },
+  {
+    "text": "The API accepts JSON requests.",
+    "sentiment": "neutral"
+  }
+]

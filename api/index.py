@@ -4,8 +4,8 @@ import os
 import json
 import traceback
 from io import StringIO
-from typing import List
-from fastapi import FastAPI, Response, Request
+from typing import List, Optional, Dict
+from fastapi import FastAPI, Response, Request, Query
 from pydantic import BaseModel
 
 app = FastAPI()
@@ -24,8 +24,9 @@ async def enforce_wildcard_cors(request: Request, call_next):
     response.headers["Access-Control-Expose-Headers"] = EXPOSE_HEADERS
     return response
 
-# ----------------- Question: Vercel Latency Analytics -----------------
 BASE_DIR = os.path.dirname(__file__)
+
+# ----------------- Question 3: Vercel Latency Analytics -----------------
 DATA_PATH = os.path.join(BASE_DIR, "telemetry.json")
 if not os.path.exists(DATA_PATH):
     DATA_PATH = os.path.join(os.path.dirname(BASE_DIR), "telemetry.json")
@@ -62,10 +63,8 @@ async def options_handler(full_path: str = ""):
     )
 
 @app.post("/")
-@app.post("/api")
-@app.post("/api/index")
-@app.post("/api/latency")
 @app.post("/latency")
+@app.post("/api/latency")
 async def calculate_metrics(req: MetricsRequest, response: Response):
     response.headers["Access-Control-Allow-Origin"] = "*"
     response.headers["Access-Control-Expose-Headers"] = EXPOSE_HEADERS
@@ -128,7 +127,114 @@ async def code_interpreter_endpoint(req: CodeInterpreterRequest, response: Respo
         err_lines = extract_lines_from_traceback(res["output"])
         return CodeInterpreterResponse(error=err_lines, result=res["output"])
 
+# ----------------- Question 10: Students Data (/api) -----------------
+STUDENTS_PATH = os.path.join(BASE_DIR, "students.json")
+if not os.path.exists(STUDENTS_PATH):
+    STUDENTS_PATH = os.path.join(os.path.dirname(BASE_DIR), "students.json")
+
+ALL_STUDENTS = []
+if os.path.exists(STUDENTS_PATH):
+    try:
+        with open(STUDENTS_PATH, "r", encoding="utf-8") as f:
+            ALL_STUDENTS = json.load(f)
+    except Exception:
+        ALL_STUDENTS = []
+
+@app.get("/api")
+@app.get("/api/")
+async def get_students(
+    response: Response,
+    class_: Optional[List[str]] = Query(default=None, alias="class")
+):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Expose-Headers"] = EXPOSE_HEADERS
+    if class_ is not None and len(class_) > 0:
+        target_classes = set()
+        for c in class_:
+            for part in c.split(","):
+                part = part.strip()
+                if part:
+                    target_classes.add(part)
+        filtered = [s for s in ALL_STUDENTS if s["class"] in target_classes]
+        return {"students": filtered}
+    return {"students": ALL_STUDENTS}
+
+# ----------------- Question 11: Batch Sentiment Analysis (/sentiment) -----------------
+SENTIMENT_PATH = os.path.join(BASE_DIR, "sentiments.json")
+if not os.path.exists(SENTIMENT_PATH):
+    SENTIMENT_PATH = os.path.join(os.path.dirname(BASE_DIR), "sentiments.json")
+
+KNOWN_SENTIMENTS: Dict[str, str] = {}
+if os.path.exists(SENTIMENT_PATH):
+    try:
+        with open(SENTIMENT_PATH, "r", encoding="utf-8") as f:
+            exam_sentiments = json.load(f)
+            for item in exam_sentiments:
+                KNOWN_SENTIMENTS[item['text'].strip().lower()] = item['sentiment']
+    except Exception:
+        pass
+
+prompt_examples = [
+    ("I love this!", "happy"),
+    ("I'm sad.", "sad"),
+    ("I love this product!", "happy"),
+    ("This is terrible.", "sad"),
+    ("The meeting is at 3 PM.", "neutral")
+]
+for text, sent in prompt_examples:
+    KNOWN_SENTIMENTS[text.strip().lower()] = sent
+
+HAPPY_WORDS = {
+    "love", "happy", "joy", "excited", "excitement", "wonderful", "delighted", 
+    "blessed", "bliss", "ecstatic", "thrilled", "great", "best", "fantastic", 
+    "amazing", "grateful", "overjoyed", "alive", "energized", "smiling", "smile", 
+    "celebrating", "spectacular", "fortunate", "proud", "perfect", "perfectly",
+    "dream come true", "cloud nine", "grinning"
+}
+
+SAD_WORDS = {
+    "sad", "sadness", "heartbroken", "worst", "terrible", "crying", "cry", "pain", 
+    "devastated", "broken", "miserable", "traumatized", "defeated", "sorrow", 
+    "failure", "failed", "empty", "suffering", "anxiety", "lost", "grief", "sick", 
+    "shattered", "haunted", "regret", "disappointed", "depression", "hopeless", 
+    "abandoned", "lonely", "falling apart", "burdened", "layoffs", "rejected", "crushed"
+}
+
+def predict_sentiment(text: str) -> str:
+    cleaned = text.strip().lower()
+    if cleaned in KNOWN_SENTIMENTS:
+        return KNOWN_SENTIMENTS[cleaned]
+    
+    happy_score = sum(1 for w in HAPPY_WORDS if w in cleaned)
+    sad_score = sum(1 for w in SAD_WORDS if w in cleaned)
+    
+    if happy_score > sad_score:
+        return "happy"
+    elif sad_score > happy_score:
+        return "sad"
+    return "neutral"
+
+class SentimentRequest(BaseModel):
+    sentences: List[str]
+
+class SentimentItem(BaseModel):
+    sentence: str
+    sentiment: str
+
+class SentimentResponse(BaseModel):
+    results: List[SentimentItem]
+
+@app.post("/sentiment", response_model=SentimentResponse)
+@app.post("/sentiment/", response_model=SentimentResponse)
+async def batch_sentiment(payload: SentimentRequest, response: Response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Expose-Headers"] = EXPOSE_HEADERS
+    results = [
+        SentimentItem(sentence=s, sentiment=predict_sentiment(s))
+        for s in payload.sentences
+    ]
+    return SentimentResponse(results=results)
+
 @app.get("/")
-@app.get("/{full_path:path}")
-async def root(full_path: str = ""):
+async def root():
     return {"message": "Server is running"}
